@@ -2,8 +2,10 @@
   "name": "boilerplatenode",
   "version": "1.0.0",
   "description": "Boilerplate application in Node.Js with TypeScript.",
-  "main": "index.js",
+  "main": "dist/src/server.js",
   "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,5 +20,10 @@
     "@types/node": "^18.0.0",
     "tslint": "^6.1.3",
     "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "reflect-metadata": "^0.1.13"
   }
 }
