@@ -13,4 +13,5 @@ npm i @types/express @types/node --save-dev
 
 ```
 npm i inversify inversify-express-utils reflect-metadata --save
+npm i dotenv --save
 ```
