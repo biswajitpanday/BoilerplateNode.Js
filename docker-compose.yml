@@ -1,0 +1,50 @@
+version: "3"
+services:
+  boilerplate-api:
+    container_name: boilerplatenodejs-api_container
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: newPassword
+      DB_NAME: weatherforecast-db
+      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/weatherforecast-db
+      NODE_ENV: development
+      PORT: 5001
+    ports:
+      - "5001:5001"
+  postgres:
+    container_name: postgress_container
+    image: postgres:10.4
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - ./src/repository/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newpassword
+      POSTGRES_DB: weatherforecast-db
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:4.18
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin_linuxhunt.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+volumes:
+  postgresdata:
+  pgadmin-data:

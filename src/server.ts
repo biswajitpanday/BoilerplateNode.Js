@@ -1,6 +1,8 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import { InversifyExpressServer } from "inversify-express-utils";
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { createDatabase } from 'typeorm-extension';
 import { GetIocContainer } from './common/iocRegister';
 import { AppDataSource } from './repository/dataSource';
 
@@ -27,8 +29,8 @@ class Server {
         });
 
         AppDataSource.initialize().then(() => {
-            console.info("Initialized Postgres.")
-        });
+            console.info("Initialized Postgres DataSource.")
+        }).catch((err) => console.log(err));
 
         const app = server.build();
         let serve: any = app.listen(port, () =>
